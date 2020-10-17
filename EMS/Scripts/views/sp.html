@@ -8,21 +8,17 @@
     <script src="../Common.js"></script>
     <script>
 
- 
-
         let mgr = new empManager();
         function init(){
             $hide("div1");
             $hide("div2");
             $hide("div3");
             //add some dummy records to the store...
-            mgr.addEmployee(new employee(37, "shravani", "mysore"));
-            mgr.addEmployee(new employee(14, "ruchi", "Mysore"));
-            mgr.addEmployee(new employee(25, "kalyan", "telangana"));
-            mgr.addEmployee(new employee(12, "jyothi", "Chennai"));
+            mgr.addEmployee(new employee(123, "Phaniraj", "Bangalore"));
+            mgr.addEmployee(new employee(124, "Santosh", "Mysore"));
+            mgr.addEmployee(new employee(125, "Albert", "Pune"));
+            mgr.addEmployee(new employee(126, "Joseph", "Chennai"));
         }
-
- 
 
         //Called when the user clicks the link of adding employee
         function onAddClick(){
@@ -44,19 +40,17 @@
             alert("Employee added successfully");
         }
 
- 
-
         function fillRecords(){
             $hide("div3");
             $hide("div2");
             $show("div1");
            //to fill<th>Emp ID</th><th>Emp ID</th> the table of data..
-           let heading = `<tr><th>Emp ID</th><th>Emp Name</th><th>Emp Address</th><th>Options</th>`;
+           let heading = `<tr><th>Emp ID</th><th>Emp Name</th><th>Emp Address</th><th>Options</th><th>Options</th>`;
             $("tblRecords").innerHTML = heading;
             $show("div1");
             let data = mgr.getAll();
             data.forEach(emp => {
-                let row = `<tr><td>${emp.empId}</td><td>${emp.empName}</td><td>${emp.empAddress}</td><td><a href="#" class="edit" sId="${emp.empId}">Edit</a></td> <td><a href="#" class="delete" sId="${emp.empId}">Delete</a></td>`;
+                let row = `<tr><td>${emp.empId}</td><td>${emp.empName}</td><td>${emp.empAddress}</td><td><a href="#" class="edit" sId="${emp.empId}">Edit</a></td><td><a href="#" class="delete" sId="${emp.empId}">delete</a></td>`;
                 $('tblRecords').innerHTML += row;
                 $mapEvent("edit", function(){
                     debugger;
@@ -69,13 +63,12 @@
                     $hide("div3");
                     $show("div2");
                 })
-                $mapDelete("delete", function(){
+                $mapdelete("delete",function(){
                     debugger;
-                    if(confirm("Are you Sure you Want to Delete"))
-                    {
-                        let selectedId = this.attributes["sid"].value;
-                        let empObj = mgr.findEmployee(selectedId);
-                        mgr.deleteEmployee(empObj.empId)
+                    if(confirm("do you want to delete!!")){
+                    let selectedId = this.attributes["sid"].value;
+                    let empObj = mgr.findEmployee(selectedId);
+                    mgr.deleteEmployee(empObj.empId)
                         $hide("div1");
                         $hide("div3");
                         $hide("div2");
@@ -85,10 +78,13 @@
                         $hide("div3");
                         $hide("div2");
                     }
-                    
-                })
-            });
+                    })
+                });
+            
         }
+
+    
+
         function updateRecord(){
             let id = $("empId").innerText;
             let name = $("empName").value;
